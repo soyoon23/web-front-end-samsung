@@ -22,7 +22,7 @@ CartProvider.propTypes = {
       }),
     ),
   ]),
-  total: number,
+  totalPrice: number,
   handleUpdateAmount: func,
 };
 

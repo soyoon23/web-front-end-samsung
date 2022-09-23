@@ -5,7 +5,7 @@ import { func } from 'prop-types';
 import {useCart} from '../../contexts/cart';
 
 export default function CartList() {
-  const {products, total, handleUpdateAmount } =useCart();
+  const {products, handleUpdateAmount } =useCart();
   return (
     <Container>
       {products.map((product) => (

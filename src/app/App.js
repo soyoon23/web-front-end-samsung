@@ -11,7 +11,7 @@ export default function App() {
   const [carts, setCarts] = useState({
     title: '장바구니',
     products: null,
-    total: 0,
+    totalPrice: 0,
   });
   
   useEffect(() => {
