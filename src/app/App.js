@@ -1,8 +1,9 @@
 import axios from 'axios';
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import styled, { css } from 'styled-components/macro';
 import GlobalStyle from 'styles/GlobalStyle';
 import { Cart } from 'components';
+import { CartProvider } from '../contexts/cart';
 
 export default function App() {
   let [loading, setLoading] = useState(true);
@@ -10,9 +11,9 @@ export default function App() {
   const [carts, setCarts] = useState({
     title: '장바구니',
     products: null,
-    totalPrice: 0,
+    total: 0,
   });
-
+  
   useEffect(() => {
     async function fetchProducts() {
       try {
@@ -57,6 +58,15 @@ export default function App() {
       }),
     }));
   }, []);
+  
+
+  const cartValue = useMemo(
+    () => ({
+      ...carts,
+      handleUpdateAmount,
+    }),
+    [carts, handleUpdateAmount]
+  );
 
   if (loading) {
     return <Loading role="alert">제품 정보 로딩 중...</Loading>;
@@ -68,14 +78,12 @@ export default function App() {
 
   return (
     <>
+    
       <GlobalStyle />
       <Container>
-        <Cart
-          title={carts.title}
-          products={carts.products}
-          total={carts.totalPrice}
-          onUpdate={handleUpdateAmount}
-        />
+      <CartProvider value={cartValue}>
+          <Cart />
+        </CartProvider>
       </Container>
     </>
   );
